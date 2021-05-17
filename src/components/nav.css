@@ -1,0 +1,17 @@
+.nav-bar {
+  background-color: #26a69a;
+  height: 72px;
+}
+
+.todo-logo {
+  padding-left: 75px;
+  width: 31px;
+  height: 40px;
+}
+
+.signout-text {
+  font-weight: bolder;
+  color: #ffffff;
+  padding-right: 75px;
+  font: normal normal 800 18px/76px;
+}

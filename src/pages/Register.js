@@ -1,0 +1,117 @@
+import React, { useState } from "react";
+import FormField from "../components/FormField";
+
+import { Link, useHistory } from "react-router-dom";
+import Loader from "../components/Loader";
+
+import logo from "../assets/to-do-login.svg";
+import "./forms.css";
+import { URL } from "../url";
+import axios from "axios";
+
+function Register({ login }) {
+  let history = useHistory();
+
+  const [state, setstate] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  const [error, seterror] = useState(false);
+  const [loading, setloading] = useState(false);
+
+  const setStateHelper = (key, val) => {
+    let temp = state;
+    temp[key] = val;
+    setstate(temp);
+  };
+
+  const register = () => {
+    setloading(true);
+    seterror(false);
+    axios
+      .post(URL + "auth/register/", state)
+      .then((res) => {
+        axios
+          .post(URL + "auth/login/", {
+            username: state.username,
+            password: state.password,
+          })
+          .then((res) => {
+            login(res.data);
+            setloading(false);
+            history.replace("/home");
+          })
+          .catch((err) => {
+            seterror(true);
+            setloading(false);
+          });
+      })
+      .catch((err) => {
+        seterror(true);
+        setloading(false);
+      });
+  };
+
+  return (
+    <div className="outer">
+      <div className="col-10 mx-auto d-flex flex-column my-card">
+        {error && (
+          <h5 className="error-message">Please enter correct credentials.</h5>
+        )}
+        <div className="col-12 d-flex flex-row justify-content-center form-logo-wrapper">
+          <img className="form-logo" src={logo} alt="logo"></img>
+        </div>
+        <div className="">
+          <FormField
+            heading="Username"
+            field="text"
+            updateState={setStateHelper}
+            state="username"
+          />
+          <FormField
+            heading="Email"
+            field="text"
+            updateState={setStateHelper}
+            state="email"
+          />
+          <FormField
+            heading="Password"
+            field="password"
+            updateState={setStateHelper}
+            state="password"
+          />
+          <FormField
+            heading="Confirm Password"
+            field="password"
+            updateState={setStateHelper}
+            state="password2"
+          />
+        </div>
+        <div className="login-button-wrapper">
+          {loading ? (
+            <Loader active />
+          ) : (
+            <button onClick={() => register()} className="login-button">
+              REGISTER
+            </button>
+          )}
+        </div>
+        <div className="login-button-wrapper" style={{ marginTop: "-5px" }}>
+          <Link to="/login">
+            <button
+              className="login-button"
+              style={{ backgroundColor: "#e85b30" }}
+            >
+              LOGIN INSTEAD!
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Register;
