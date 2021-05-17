@@ -15,8 +15,8 @@ function Todo(props) {
     <div className="todo-box d-flex flex-row align-items-center flex-wrap">
       <div className="d-flex flex-row col-8 align-items-center flex-wrap">
         <h4 className="todo-title-text">{props.title}</h4>
-        {props.labels.map((label) => {
-          return <TodoLabel label={label} />;
+        {props.labels.map((label, index) => {
+          return <TodoLabel key={index} label={label} />;
         })}
       </div>
       <div className="d-flex flex-row col-4 align-items-center justify-content-end">
@@ -24,8 +24,18 @@ function Todo(props) {
           <h5 className="todo-priority-text">{priorities[props.priority]}</h5>
         </div>
         <div className="col-6 todo-actions d-flex flex-row justify-content-end">
-          <img className="todo-action" src={trash} alt="delete todo"></img>
-          <img className="todo-action" src={edit} alt="edit todo"></img>
+          <img
+            onClick={() => props.delete(props.id)}
+            className="todo-action"
+            src={trash}
+            alt="delete todo"
+          ></img>
+          <img
+            onClick={() => props.update(props.id)}
+            className="todo-action"
+            src={edit}
+            alt="edit todo"
+          ></img>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { URL } from "../URL";
+import { URL } from "../url";
 const axiosApiInstance = axios.create();
 
 axiosApiInstance.interceptors.response.use(

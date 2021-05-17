@@ -13,26 +13,10 @@ import {
   Redirect,
 } from "react-router-dom";
 
-const todos = [
-  {
-    title: "My Todo 1",
-    labels: ["cleanliness", "maintenance"],
-    priority: 1,
-  },
-  {
-    title: "My Todo 2",
-    labels: ["cleanliness", "maintenanceeeeeeee"],
-    priority: 3,
-  },
-  {
-    title: "My Todo 3",
-    labels: ["cleanliness"],
-    priority: 2,
-  },
-];
-
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
+
+  useEffect(() => {}, [isLoggedIn]);
 
   // checking if the user is already logged in
   useEffect(() => {
@@ -59,6 +43,7 @@ function App() {
     tomorrow.setDate(new Date().getDate() + 1);
     localStorage.setItem("expiry", tomorrow);
     localStorage.setItem("user", JSON.stringify(credentials));
+
     setisLoggedIn(true);
   };
 
@@ -90,7 +75,7 @@ function App() {
         <Switch>
           {isLoggedIn && (
             <Route exact path="/home">
-              <Home todos={todos} logout={logoutHelper} />
+              <Home logout={logoutHelper} />
             </Route>
           )}
         </Switch>
