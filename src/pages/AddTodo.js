@@ -191,7 +191,7 @@ function AddTodo(props) {
               ADD
             </button>
           </div>
-          <div className="d-flex flex-row mt-3 mb-1 flex-wrap overflow-scroll">
+          <div className="d-flex flex-row mt-3 mb-1 flex-wrap overflow-auto">
             {state.labels.map((label, index) => {
               return <TodoLabel key={index} label={label} />;
             })}
