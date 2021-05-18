@@ -22,13 +22,13 @@ function Todo(props) {
       }}
       className="todo-box d-flex flex-row align-items-center flex-wrap"
     >
-      <div className="d-flex flex-row col-8 align-items-center flex-wrap">
+      <div className="d-flex flex-row col-12 col-lg-8 align-items-center flex-wrap mb-2">
         <h4 className="todo-title-text">{props.title}</h4>
         {props.labels.map((label, index) => {
           return <TodoLabel key={index} label={label} />;
         })}
       </div>
-      <div className="d-flex flex-row col-4 align-items-center justify-content-end">
+      <div className="d-flex flex-row col-lg-4 col-12 align-items-center justify-content-end mb-2">
         <div className="col-6 todo-priority d-flex flex-row justify-content-end">
           <h5 className="todo-priority-text">{priorities[props.priority]}</h5>
         </div>
