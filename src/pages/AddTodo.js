@@ -7,6 +7,7 @@ import "./addtodo.css";
 import axios from "../services/axios";
 import { URL } from "../url";
 import { config } from "../url";
+import close from "../assets/close.png";
 
 const customStyles = {
   content: {
@@ -145,8 +146,20 @@ function AddTodo(props) {
       contentLabel="Add Todo"
       closeTimeoutMS={500}
     >
-      <div className="d-flex flex-column">
-        <div className="col-10 mx-auto d-flex flex-column my-card">
+      <div
+        className="d-flex flex-column add-todo-card"
+        style={{ padding: "0px" }}
+      >
+        <div className="d-flex flex-row justify-content-end">
+          <img
+            onClick={() => {
+              props.hide();
+            }}
+            id="close-addtodo-modal"
+            src={close}
+          ></img>
+        </div>
+        <div className="col-10 mx-auto d-flex flex-column p-4">
           <FormFieldDumb heading="Task Title" />
           <input
             value={state.title}
