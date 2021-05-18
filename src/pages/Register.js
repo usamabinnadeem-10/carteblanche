@@ -22,6 +22,7 @@ function Register({ login }) {
   const [error, seterror] = useState(false);
   const [loading, setloading] = useState(false);
 
+  // helper function to set state changed by FormField component
   const setStateHelper = (key, val) => {
     let temp = state;
     temp[key] = val;
@@ -34,15 +35,16 @@ function Register({ login }) {
     axios
       .post(URL + "auth/register/", state)
       .then((res) => {
+        // log the user in automatically once he/she is registered
         axios
           .post(URL + "auth/login/", {
             username: state.username,
             password: state.password,
           })
           .then((res) => {
-            login(res.data);
+            login(res.data); // logging user in App.js (parent)
             setloading(false);
-            history.replace("/home");
+            history.replace("/home"); // navigate to home now and show the home page
           })
           .catch((err) => {
             seterror(true);

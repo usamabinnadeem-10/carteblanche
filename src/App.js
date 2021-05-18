@@ -30,7 +30,7 @@ function App() {
       if (duration > 0) {
         setisLoggedIn(true);
       }
-
+      // log the user out after duration milliseconds
       setTimeout(() => {
         logoutHelper();
       }, duration);
@@ -42,11 +42,11 @@ function App() {
     tomorrow.setDate(new Date().getDate() + 1);
     localStorage.setItem("expiry", tomorrow);
     localStorage.setItem("user", JSON.stringify(credentials));
-
     setisLoggedIn(true);
   };
 
   const logoutHelper = () => {
+    // erase user from local storage
     setisLoggedIn(false);
     localStorage.removeItem("user");
     localStorage.removeItem("expiry");

@@ -19,10 +19,12 @@ const customStyles = {
   },
 };
 
+// changing default styling of react-modal
 Modal.defaultStyles.overlay.backgroundColor = "#00000066";
 Modal.defaultStyles.content.backgroundColor = "transparent";
 Modal.defaultStyles.content.border = "none";
 
+// constant array to iterate when rendering priority buttons
 const PRIORITIES = [
   {
     value: 1,
@@ -46,19 +48,22 @@ function AddTodo(props) {
     labels: [],
   });
 
+  // if updating todo, then set the state to the data passed in by Home.js
   useEffect(() => {
     if (props.update) {
       setstate(props.data);
     }
   }, []);
 
-  const [labelText, setlabelText] = useState("");
+  const [labelText, setlabelText] = useState(""); // store the text for current label
   const [loading, setloading] = useState(false);
 
+  // closes Modal
   function closeModal() {
     props.hide();
   }
 
+  // utility function to update the css for priority buttons
   const changePriority = (id) => {
     PRIORITIES.forEach((element) => {
       let name = "priority-button-" + element.value;
@@ -72,6 +77,8 @@ function AddTodo(props) {
     });
   };
 
+  // add new label to the labels array
+  // makes sure that empty spaces are not appended to array
   const addLabel = () => {
     if (labelText.trim().length > 0) {
       let newLabels = state.labels;
@@ -81,6 +88,8 @@ function AddTodo(props) {
     }
   };
 
+  // only send the request if user has filled in the todo
+  // user does not need to fill in labels though
   const validateState = () => {
     if (state.title === "" || state.priority === 0) {
       return false;
@@ -89,29 +98,33 @@ function AddTodo(props) {
     }
   };
 
+  // sends back the request to server
   const createTask = () => {
     if (validateState()) {
       let access = JSON.parse(localStorage.getItem("user")).access;
       setloading(true);
+      // if need to edit an existing todo
       if (props.update) {
         axios
           .put(URL + "api/add-todo/", state, config(access))
           .then((res) => {
-            props.setUpdatedTodosList(res.data.todos);
+            props.setUpdatedTodosList(res.data.todos); // update the todos in Home.js (parent)
             setloading(false);
-            props.hide();
+            props.hide(); // hide the modal now
           })
           .catch((err) => {
             setloading(false);
             window.alert("Oops, something went wrong :3");
           });
-      } else {
+      }
+      // adding a new todo
+      else {
         axios
           .post(URL + "api/add-todo/", state, config(access))
           .then((res) => {
-            props.setUpdatedTodosList(res.data.todos);
+            props.setUpdatedTodosList(res.data.todos); // update the todos in Home.js (parent)
             setloading(false);
-            props.hide();
+            props.hide(); // hide the modal now
           })
           .catch((err) => {
             setloading(false);

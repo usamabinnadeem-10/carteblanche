@@ -13,9 +13,9 @@ import { buttonHover, buttonTap, scaleAndOpacity } from "../animations";
 function Home({ logout }) {
   const [todos, settodos] = useState([]);
   const [loading, setloading] = useState(false);
-  const [addTodo, setaddTodo] = useState(false);
-  const [updateTodo, setupdateTodo] = useState(false);
-  const [editingTodo, seteditingTodo] = useState();
+  const [addTodo, setaddTodo] = useState(false); // true when new todo is being created
+  const [updateTodo, setupdateTodo] = useState(false); // true when existing todo is being edited
+  const [editingTodo, seteditingTodo] = useState(); // todo being edited is stored in here
 
   useEffect(() => {
     setloading(true);
@@ -59,12 +59,14 @@ function Home({ logout }) {
     settodos(todos);
   };
 
+  // we are neither editing, nor creating a new todo so setting both false
   const hideTodoModal = () => {
     setaddTodo(false);
     setupdateTodo(false);
   };
 
   const updateTodoHelper = (id) => {
+    // filtering the todo that needs to be updated
     let todo = todos.find((element) => element.id === id);
     seteditingTodo(todo);
     setupdateTodo(true);
@@ -80,6 +82,7 @@ function Home({ logout }) {
       className="d-flex flex-column"
     >
       <Navbar logout={logout} />
+      {/* react-modal to pop up when creating new todo */}
       {addTodo && (
         <AddTodo
           open
@@ -87,12 +90,14 @@ function Home({ logout }) {
           setUpdatedTodosList={setUpdatedTodosList}
         />
       )}
+      {/* react-modal to pop up when updating existing todo */}
       {updateTodo && (
         <AddTodo
           open
           hide={hideTodoModal}
           setUpdatedTodosList={setUpdatedTodosList}
           update
+          // send in the todo's data to be filled in the modal
           data={editingTodo}
         />
       )}

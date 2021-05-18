@@ -18,6 +18,7 @@ function Login(props) {
   const [error, seterror] = useState(false);
   const [loading, setloading] = useState(false);
 
+  // helper function to set state changed by FormField component
   const setStateHelper = (key, val) => {
     let temp = state;
     temp[key] = val;
@@ -30,7 +31,7 @@ function Login(props) {
     axios
       .post(URL + "auth/login/", state)
       .then((res) => {
-        props.login(res.data);
+        props.login(res.data); // sending the login details back to App.js (parent)
         setloading(false);
       })
       .catch((err) => {
