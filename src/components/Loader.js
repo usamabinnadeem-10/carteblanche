@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { css } from "@emotion/core";
-import ClipLoader from "react-spinners/HashLoader";
+import HashLoader from "react-spinners/HashLoader";
 
 const override = css`
   display: block;
@@ -14,7 +14,7 @@ function Loader({ active }) {
 
   return (
     <div className="sweet-loading">
-      <ClipLoader
+      <HashLoader
         color={color}
         loading={loading}
         css={override}

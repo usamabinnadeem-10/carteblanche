@@ -3,11 +3,12 @@ import Navbar from "../components/Navbar";
 import Todo from "../components/Todo";
 import Loader from "../components/Loader";
 import AddTodo from "./AddTodo";
-
 import "./home.css";
 import { URL } from "../url";
 import { config } from "../url";
 import axios from "../services/axios";
+import { motion } from "framer-motion";
+import { buttonHover, buttonTap, scaleAndOpacity } from "../animations";
 
 function Home({ logout }) {
   const [todos, settodos] = useState([]);
@@ -70,7 +71,14 @@ function Home({ logout }) {
   };
 
   return (
-    <div className="d-flex flex-column">
+    <motion.div
+      initial={{
+        opacity: 0,
+      }}
+      animate={scaleAndOpacity.animate}
+      transition={scaleAndOpacity.transition}
+      className="d-flex flex-column"
+    >
       <Navbar logout={logout} />
       {addTodo && (
         <AddTodo
@@ -92,9 +100,17 @@ function Home({ logout }) {
       <div className="todos-wrapper">
         <div className="welcome-wrapper d-flex flex-row justify-content-between align-items-center">
           <h2 className="welcome-home">Welcome to your to-do list!</h2>
-          <button onClick={() => setaddTodo(true)} className="add-todo-button">
+          <motion.button
+            whileHover={{
+              ...buttonHover.hover,
+              boxShadow: "0px 15px 26px -6px rgba(0,0,0,0.55)",
+            }}
+            whileTap={buttonTap.tap}
+            onClick={() => setaddTodo(true)}
+            className="add-todo-button"
+          >
             CREATE NEW TASK
-          </button>
+          </motion.button>
         </div>
         {loading && <Loader active />}
         {!loading &&
@@ -117,7 +133,7 @@ function Home({ logout }) {
           </h4>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

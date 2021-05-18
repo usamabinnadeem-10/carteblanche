@@ -16,8 +16,6 @@ import {
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
 
-  useEffect(() => {}, [isLoggedIn]);
-
   // checking if the user is already logged in
   useEffect(() => {
     // if current time is more than expiry time then just log the user out
@@ -32,6 +30,7 @@ function App() {
       if (duration > 0) {
         setisLoggedIn(true);
       }
+
       setTimeout(() => {
         logoutHelper();
       }, duration);

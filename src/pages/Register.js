@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import FormField from "../components/FormField";
-
 import { Link, useHistory } from "react-router-dom";
 import Loader from "../components/Loader";
-
 import logo from "../assets/to-do-login.svg";
 import "./forms.css";
 import { URL } from "../url";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { scaleAndOpacity, buttonHover } from "../animations";
 
 function Register({ login }) {
   let history = useHistory();
@@ -57,7 +57,12 @@ function Register({ login }) {
 
   return (
     <div className="outer">
-      <div className="col-10 mx-auto d-flex flex-column my-card">
+      <motion.div
+        initial={scaleAndOpacity.initial}
+        animate={scaleAndOpacity.animate}
+        transition={scaleAndOpacity.transition}
+        className="col-10 mx-auto d-flex flex-column my-card"
+      >
         {error && (
           <h5 className="error-message">Please enter correct credentials.</h5>
         )}
@@ -94,22 +99,29 @@ function Register({ login }) {
           {loading ? (
             <Loader active />
           ) : (
-            <button onClick={() => register()} className="login-button">
+            <motion.button
+              whileHover={buttonHover.hover}
+              transition={buttonHover.transition}
+              onClick={() => register()}
+              className="login-button"
+            >
               REGISTER
-            </button>
+            </motion.button>
           )}
         </div>
         <div className="login-button-wrapper" style={{ marginTop: "-5px" }}>
           <Link to="/login">
-            <button
+            <motion.button
+              whileHover={buttonHover.hover}
+              transition={buttonHover.transition}
               className="login-button"
               style={{ backgroundColor: "#e85b30" }}
             >
               LOGIN INSTEAD!
-            </button>
+            </motion.button>
           </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

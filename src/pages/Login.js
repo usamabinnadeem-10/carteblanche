@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import FormField from "../components/FormField";
 import Loader from "../components/Loader";
-
 import logo from "../assets/to-do-login.svg";
 import "./forms.css";
-
 import { Link } from "react-router-dom";
-
 import { URL } from "../url";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { scaleAndOpacity, buttonHover, buttonTap } from "../animations";
 
 function Login(props) {
   const [state, setstate] = useState({
@@ -42,7 +41,12 @@ function Login(props) {
 
   return (
     <div className="outer">
-      <div className="col-10 mx-auto d-flex flex-column my-card">
+      <motion.div
+        initial={scaleAndOpacity.initial}
+        animate={scaleAndOpacity.animate}
+        transition={scaleAndOpacity.transition}
+        className="col-10 mx-auto d-flex flex-column my-card"
+      >
         {error && (
           <h5 className="error-message">Please enter correct credentials.</h5>
         )}
@@ -67,24 +71,32 @@ function Login(props) {
           {loading ? (
             <Loader active />
           ) : (
-            <button onClick={() => login()} className="login-button">
+            <motion.button
+              whileHover={buttonHover.hover}
+              transition={buttonHover.transition}
+              whileTap={buttonTap.tap}
+              onClick={() => login()}
+              className="login-button"
+            >
               SIGN IN
-            </button>
+            </motion.button>
           )}
         </div>
         {!loading && (
           <div className="login-button-wrapper" style={{ marginTop: "-5px" }}>
             <Link to="/register">
-              <button
+              <motion.button
+                whileHover={buttonHover.hover}
+                transition={buttonHover.transition}
                 className="login-button"
                 style={{ backgroundColor: "#e85b30" }}
               >
                 JOIN US IF YOU ARE NEW!
-              </button>
+              </motion.button>
             </Link>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

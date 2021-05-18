@@ -3,6 +3,8 @@ import "./todo.css";
 import TodoLabel from "./TodoLabel";
 import trash from "../assets/Trash-large.svg";
 import edit from "../assets/Edit-small.svg";
+import { motion } from "framer-motion";
+import { slideLTR } from "../animations";
 
 const priorities = {
   1: "High",
@@ -12,7 +14,14 @@ const priorities = {
 
 function Todo(props) {
   return (
-    <div className="todo-box d-flex flex-row align-items-center flex-wrap">
+    <motion.div
+      initial={slideLTR.initial}
+      animate={slideLTR.animate}
+      whileHover={{
+        boxShadow: "0px 5px 16px -6px rgba(0,0,0,0.50)",
+      }}
+      className="todo-box d-flex flex-row align-items-center flex-wrap"
+    >
       <div className="d-flex flex-row col-8 align-items-center flex-wrap">
         <h4 className="todo-title-text">{props.title}</h4>
         {props.labels.map((label, index) => {
@@ -24,21 +33,27 @@ function Todo(props) {
           <h5 className="todo-priority-text">{priorities[props.priority]}</h5>
         </div>
         <div className="col-6 todo-actions d-flex flex-row justify-content-end">
-          <img
+          <motion.img
+            whileHover={{
+              scale: 1.1,
+            }}
             onClick={() => props.delete(props.id)}
             className="todo-action"
             src={trash}
             alt="delete todo"
-          ></img>
-          <img
+          ></motion.img>
+          <motion.img
+            whileHover={{
+              scale: 1.1,
+            }}
             onClick={() => props.update(props.id)}
             className="todo-action"
             src={edit}
             alt="edit todo"
-          ></img>
+          ></motion.img>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

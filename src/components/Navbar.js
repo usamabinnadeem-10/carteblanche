@@ -1,6 +1,7 @@
 import React from "react";
 import "./nav.css";
-
+import { motion } from "framer-motion";
+import { buttonTap } from "../animations";
 import logo from "../assets/to-do.svg";
 
 function Navbar({ logout }) {
@@ -10,7 +11,12 @@ function Navbar({ logout }) {
         <img src={logo} alt="logo"></img>
       </div>
 
-      <div>
+      <motion.div
+        whileHover={{
+          opacity: 0.75,
+        }}
+        whileTap={buttonTap.tap}
+      >
         <h6
           onClick={() => {
             logout();
@@ -20,7 +26,7 @@ function Navbar({ logout }) {
         >
           Signout
         </h6>
-      </div>
+      </motion.div>
     </div>
   );
 }

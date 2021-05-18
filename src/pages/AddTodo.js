@@ -52,17 +52,7 @@ function AddTodo(props) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   let button = document.getElementById(
-  //     "priority-button-" + props.data.priority
-  //   );
-  //   console.log("priority-button-" + props.data.priority);
-  //   console.log(button);
-  //   button.className = "priority-button-filled";
-  // }, [state.priority]);
-
   const [labelText, setlabelText] = useState("");
-  const [error, seterror] = useState(false);
   const [loading, setloading] = useState(false);
 
   function closeModal() {
@@ -140,6 +130,7 @@ function AddTodo(props) {
       onRequestClose={closeModal}
       style={customStyles}
       contentLabel="Add Todo"
+      closeTimeoutMS={500}
     >
       <div className="d-flex flex-column">
         <div className="col-10 mx-auto d-flex flex-column my-card">
@@ -196,13 +187,16 @@ function AddTodo(props) {
               return <TodoLabel key={index} label={label} />;
             })}
           </div>
-
-          <button
-            onClick={() => createTask()}
-            className={"priority-button-filled mt-5 py-2 action-button"}
-          >
-            {props.update ? "UPDATE TODO" : "CREATE TASK"}
-          </button>
+          {loading ? (
+            <Loader active />
+          ) : (
+            <button
+              onClick={() => createTask()}
+              className={"priority-button-filled mt-5 py-2 action-button"}
+            >
+              {props.update ? "UPDATE TODO" : "CREATE TASK"}
+            </button>
+          )}
         </div>
       </div>
     </Modal>
